@@ -1,0 +1,75 @@
+
+ 
+<div class="container-fluid"> 
+<div style="margin-left: 40px;">	
+<h1>Sigma Helpdesk</h1>
+<h2>Abrir Chamado</h2>
+	<form name="myForm">
+	  <div class="form-group">
+	    <label for="exampleInputEmail1">Email</label>
+	    <input type="email" class="form-control" name="femail" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+	    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+	  </div>
+	  <div class="form-group">
+	    <label for="formGroupExampleInput">Assunto</label>
+	    <input type="text" class="form-control" name="fassunto" id="assunto" placeholder="Insira o assunto">
+	  <br>
+	  <div class="form-group">
+	    <label for="exampleFormControlTextarea1">Mensagem</label>
+	    <textarea class="form-control" name="fmensagem" placeholder="Insira a mensagem" id="exampleFormControlTextarea1" rows="3"></textarea>
+	  </div>
+	  <button type="submit" onclick="criar_chamado2()"  class="btn btn-primary">Submit</button>
+	</form>
+	<div class="some">
+		<p> Some </p>
+	</div>
+
+	<script type="text/javascript">
+
+
+		function criar_chamado2() {			
+
+			var email = document.forms["myForm"]["femail"].value;
+			var assunto = document.forms["myForm"]["fassunto"].value;
+			var mensagem = document.forms["myForm"]["fmensagem"].value;		
+
+				const Url="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/1";
+				const data = {
+					id_departamento: "5ea93aef87a12eb63d86c541b5221c5a",
+					titulo : assunto,
+					mensagem : mensagem
+					}
+				$.post(Url, data, function(data, status){
+					consoloe.log('${data} and status is $(status)')
+				});
+
+				//alert("criar");
+
+
+			
+
+		}
+
+		function criar_chamado() {
+			var email = document.forms["myForm"]["femail"].value;
+			var assunto = document.forms["myForm"]["fassunto"].value;
+			var mensagem = document.forms["myForm"]["fmensagem"].value;		
+			//alert(email+"\n"+assunto+"\n"+mensagem);
+			
+			var xhr = new XMLHttpRequest();
+			var url = "url";
+			xhr.open("POST", url, true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.onreadystatechange = function () {
+			    if (xhr.readyState === 4 && xhr.status === 200) {
+			        var json = JSON.parse(xhr.responseText);
+			        console.log(json.email + ", " + json.password);
+			    }
+			};
+			var data = JSON.stringify({"id_departamento": "5ea93aef87a12eb63d86c541b5221c5a", "titulo": "erro api js", "mensagem":"erro js" });
+			xhr.send(data);
+		}
+
+	</script>
+
+</div>
