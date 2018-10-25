@@ -7,24 +7,28 @@
 	
 
 	    <label for="exampleInputEmail1">Email</label>
-	    <input type="email" value="teste@com" class="form-control" name="femail" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+	    <input type="email" class="form-control" name="femail" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
 	    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 
-
+	    <br>
 	    <label for="formGroupExampleInput">Assunto</label>
-	    <input type="text" value="teste" class="form-control" name="fassunto" id="assunto" placeholder="Insira o assunto">
+	    <input type="text" class="form-control" name="fassunto" id="assunto" placeholder="Insira o assunto">
 
 	    <label for="exampleFormControlTextarea1">Mensagem</label>
-	    <textarea class="form-control" name="fmensagem" placeholder="Insira a mensagem" id="exampleFormControlTextarea1" rows="3">teste</textarea>
+	    <textarea class="form-control" name="fmensagem" placeholder="Insira a mensagem" id="exampleFormControlTextarea1" rows="3"></textarea>
 
-	
+	<br>
+    <label for="formGroupExampleInput">Anexo</label>
+	    <input type="file" class="form-control" name="ffile" id="assunto" placeholder="Insira o assunto">
+
+
+	<br>
 
 	<button type="submit" onclick="criar_chamado()" class="btn btn-primary">Submit</button>
 
 	<script type="text/javascript">
 		function criar_chamado(){
-	    	//console.log("log");
-	      //alert("alert");
+
 
 		    var email = document.getElementsByName("femail")[0].value;
 				var assunto = document.getElementsByName("fassunto")[0].value;
