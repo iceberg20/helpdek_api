@@ -33,15 +33,12 @@
 		    var email = document.getElementsByName("femail")[0].value;
 				var assunto = document.getElementsByName("fassunto")[0].value;
 				var mensagem = document.getElementsByName("fmensagem")[0].value;		
-			
-				var end_point="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/";
-				const Url = end_point.concat(email);
-				console.log(Url);
-				const data = {
+
+					const Url="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/1";
+					const data = {
 						id_departamento: "5ea93aef87a12eb63d86c541b5221c5a",
 						titulo: assunto,
-						mensagem: mensagem,
-						tipo_identificador: "E"
+						mensagem: mensagem
 						}
 
 					$.post(Url, data, function(data, status){
