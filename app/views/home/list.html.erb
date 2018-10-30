@@ -1,2 +1,60 @@
-<h1>Home#list</h1>
-<p>Find me in app/views/home/list.html.erb</p>
+    </% form method="POST" enctype="multipart/form-data" id="fileUploadForm" %>
+        <input type="text" name="extraField"><br><br>
+        <input type="file" name="files"><br><br>
+        <input type="file" name="files"><br><br>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+        <input type="submit" value="Submit" id="btnSubmit">
+    </form>
+
+    
+
+    <script>
+        $(document).ready(function () {
+            // evento de "submit"
+            $("#btnSubmit").click(function (event) {
+                // parar o envio para que possamos faze-lo manualmente.
+                event.preventDefault();
+                // capture o formulário
+                var form = $('#fileUploadForm')[0];
+                // crie um FormData {Object}
+                var data = new FormData(form);
+                // caso queira adicionar um campo extra ao FormData
+                // data.append("customfield", "Este é um campo extra para teste");
+                // desabilitar o botão de "submit" para evitar multiplos envios até receber uma resposta
+                $("#btnSubmit").prop("disabled", true);
+
+
+				const data2 = {
+						id_departamento: "5ea93aef87a12eb63d86c541b5221c5a",
+						titulo: "assunto",
+						mensagem: "mensagem",
+						anexos: data,
+						tipo_identificador: "E"
+						}
+						var end_point="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/1";
+                // processar
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: end_point,
+                    data: data2,
+                    processData: false, // impedir que o jQuery tranforma a "data" em querystring
+                    contentType: false, // desabilitar o cabeçalho "Content-Type"
+                    cache: false, // desabilitar o "cache"
+                    timeout: 600000, // definir um tempo limite (opcional)
+                    // manipular o sucesso da requisição
+                    success: function (data) {
+                        console.log(data);
+                        // reativar o botão de "submit"
+                        $("#btnSubmit").prop("disabled", false);
+                    },
+                    // manipular erros da requisição
+                    error: function (e) {
+                        console.log(e);
+                        // reativar o botão de "submit"
+                        $("#btnSubmit").prop("disabled", false);
+                    }
+                });
+            });
+        });
+    </script>

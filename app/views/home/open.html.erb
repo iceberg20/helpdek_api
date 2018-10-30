@@ -17,7 +17,7 @@
 
 	<br>
     <label for="formGroupExampleInput">Anexo</label>
-	    <input type="file" class="form-control" name="ffile" id="assunto" placeholder="Insira o assunto">
+	    <input type="file" class="form-control" name="ffile" multiple id="anexo" placeholder="Insira o assunto">
 
 
 	<br>
@@ -27,21 +27,50 @@
 	<script type="text/javascript">
 		function criar_chamado(){
 		    var email = document.getElementsByName("femail")[0].value;
-				var assunto = document.getElementsByName("fassunto")[0].value;
-				var mensagem = document.getElementsByName("fmensagem")[0].value;		
-			
-				var end_point="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/";
-				const Url = end_point.concat(email);
-				console.log(Url);
-				const data = {
-						id_departamento: "5ea93aef87a12eb63d86c541b5221c5a",
-						titulo: assunto,
-						mensagem: mensagem,
-						tipo_identificador: "E"
-						}
-					$.post(Url, data, function(data, status){
-						console.log('${data} and status is $(status)');
-					}, "json");
+			var assunto = document.getElementsByName("fassunto")[0].value;
+			var mensagem = document.getElementsByName("fmensagem")[0].value;
+				
+				console.log(mensagem);
+
+			    let formData = new FormData;
+			    let image = $("#anexo");
+
+
+			    console.log(image[0].files);
+			    let qtd_imagem = image[0].files.length;
+
+				var i;
+				for (i = 0; i < qtd_imagem; i++) {
+					formData.append('anexos['+i+']',image[0].files[i]);				    
+				}
+
+			    console.log("length "+image[0].files.length);
+
+			    
+
+			    formData.append("id_departamento", "5ea93aef87a12eb63d86c541b5221c5a");
+			    formData.append("titulo", assunto);
+			    formData.append("mensagem", mensagem);
+			    //formData.append("prioridade","2");
+
+				var end_point="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/1";
+		/*
+					$.ajax({
+						type: "POST",
+						enctype: 'multipart/form-data',
+						url: end_point,
+						data: formData,
+						cache: false,
+	                    contentType: false,
+	                    processData: false
+					}).done(function(data){
+						console.log(data);      
+                }).always(function(jqXHR, textStatus){
+
+                }).fail(function(data){
+                     console.log(data);  
+                });
+               */
 	  }
 	</script>
 
