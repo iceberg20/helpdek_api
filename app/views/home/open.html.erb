@@ -12,8 +12,8 @@
 	    <label for="formGroupExampleInput">Assunto</label>
 	    <input type="text" class="form-control" name="fassunto" id="assunto" placeholder="Insira o assunto">
 
-	    <label for="exampleFormControlTextarea1">Mensagem</label>
-	    <textarea class="form-control" name="fmensagem" placeholder="Insira a mensagem" id="exampleFormControlTextarea1" rows="3"></textarea>
+	    <label for="textarea">Mensagem</label>
+	    <textarea class="form-control" name="fmensagem" placeholder="Insira a mensagem" id="textarea" rows="3"></textarea>
 
 	<br>
     <label for="formGroupExampleInput">Anexo</label>
@@ -29,36 +29,38 @@
 		    var email = document.getElementsByName("femail")[0].value;
 			var assunto = document.getElementsByName("fassunto")[0].value;
 			var mensagem = document.getElementsByName("fmensagem")[0].value;
-				
-				console.log(mensagem);
 
-			    let formData = new FormData;
-			    let image = $("#anexo");
+			console.log(email);
+			console.log(assunto);
+			console.log(mensagem);
 
+		    let formData = new FormData;
+		    let image = $("#anexo");
 
-			    console.log(image[0].files);
-			    let qtd_imagem = image[0].files.length;
+		    console.log(image[0].files);
+		    let qtd_imagem = image[0].files.length;
 
-				var i;
-				for (i = 0; i < qtd_imagem; i++) {
-					formData.append('anexos['+i+']',image[0].files[i]);				    
-				}
+			var i;
+			for (i = 0; i < qtd_imagem; i++) {
+				formData.append('anexos['+i+']',image[0].files[i]);				    
+			}
 
-			    console.log("length "+image[0].files.length);
+		    console.log("length "+image[0].files.length);			    
 
-			    
+		    formData.append("id_departamento", "5ea93aef87a12eb63d86c541b5221c5a");
+		    formData.append("tipo_identificador", "E");
+		    formData.append("titulo", assunto);
+		    formData.append("mensagem", mensagem);
 
-			    formData.append("id_departamento", "5ea93aef87a12eb63d86c541b5221c5a");
-			    formData.append("titulo", assunto);
-			    formData.append("mensagem", mensagem);
-			    //formData.append("prioridade","2");
+		    //formData.append("prioridade","2");
 
-				var end_point="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/1";
-		/*
+			var end_point="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/";
+			const Url = end_point.concat(email);
+		
 					$.ajax({
 						type: "POST",
 						enctype: 'multipart/form-data',
-						url: end_point,
+						url: Url,
 						data: formData,
 						cache: false,
 	                    contentType: false,
@@ -70,7 +72,7 @@
                 }).fail(function(data){
                      console.log(data);  
                 });
-               */
+               
 	  }
 	</script>
 
