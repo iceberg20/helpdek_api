@@ -1,45 +1,11 @@
 <div class="container-fluid"> 
 <div style="margin-left: 40px;">	
 
-<div class="modal" tabindex="-1" role="dialog" id="exampleModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Abra seu chamado</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-		<form onsubmit="event.preventDefault()"> 
-			<label for="exampleInputEmail1">Email</label>
-			<input type="email" class="form-control" name="femail" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
-			<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-
-			<br>
-			<label for="formGroupExampleInput">Assunto</label>
-			<input type="text" class="form-control" name="fassunto" id="assunto" placeholder="Insira o assunto" required>
-
-			<label for="textarea">Mensagem</label>
-			<textarea class="form-control" name="fmensagem" placeholder="Insira a mensagem" id="textarea" rows="3" required></textarea>
-
-			<br>
-			<label for="formGroupExampleInput">Anexo</label>
-			<input type="file" class="form-control" name="ffile" multiple id="anexo" placeholder="Insira o assunto">
-
-			<br>
-			
-		</form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" onclick="criar_chamado()" class="btn btn-primary">Submit</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render "home/modal-chamado" %>
+<%= render "home/modal-sucesso" %>
 
 	<script type="text/javascript">
+
 		function criar_chamado(){
 		    var email = document.getElementsByName("femail")[0].value;
 			var assunto = document.getElementsByName("fassunto")[0].value;
@@ -75,10 +41,14 @@
 	                    contentType: false,
 	                    processData: false
 					}).done(function(data){
+						$('#exampleModal').modal('toggle');
+						$('#modal-sucesso').modal('toggle');
+
 						console.log(data);      
                 }).always(function(jqXHR, textStatus){
 
                 }).fail(function(data){
+                	$("#modal-fail-alert").show();
                      console.log(data);  
                 });
                
