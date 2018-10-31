@@ -3,36 +3,30 @@
 <h1>Sigma Helpdesk</h1>
 <h2>Abrir Chamado</h2>
 	
-
+<form onsubmit="event.preventDefault()"> 
 	    <label for="exampleInputEmail1">Email</label>
-	    <input type="email" class="form-control" name="femail" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+	    <input type="email" class="form-control" name="femail" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
 	    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 
 	    <br>
 	    <label for="formGroupExampleInput">Assunto</label>
-	    <input type="text" class="form-control" name="fassunto" id="assunto" placeholder="Insira o assunto">
+	    <input type="text" class="form-control" name="fassunto" id="assunto" placeholder="Insira o assunto" required>
 
 	    <label for="textarea">Mensagem</label>
-	    <textarea class="form-control" name="fmensagem" placeholder="Insira a mensagem" id="textarea" rows="3"></textarea>
+	    <textarea class="form-control" name="fmensagem" placeholder="Insira a mensagem" id="textarea" rows="3" required></textarea>
 
 	<br>
     <label for="formGroupExampleInput">Anexo</label>
 	    <input type="file" class="form-control" name="ffile" multiple id="anexo" placeholder="Insira o assunto">
 
-
 	<br>
-
 	<button type="submit" onclick="criar_chamado()" class="btn btn-primary">Submit</button>
-
+</form>
 	<script type="text/javascript">
 		function criar_chamado(){
 		    var email = document.getElementsByName("femail")[0].value;
 			var assunto = document.getElementsByName("fassunto")[0].value;
 			var mensagem = document.getElementsByName("fmensagem")[0].value;
-
-			console.log(email);
-			console.log(assunto);
-			console.log(mensagem);
 
 		    let formData = new FormData;
 		    let image = $("#anexo");
@@ -51,8 +45,6 @@
 		    formData.append("tipo_identificador", "E");
 		    formData.append("titulo", assunto);
 		    formData.append("mensagem", mensagem);
-
-		    //formData.append("prioridade","2");
 
 			var end_point="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/";
 			const Url = end_point.concat(email);
