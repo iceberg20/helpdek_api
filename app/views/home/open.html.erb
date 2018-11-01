@@ -28,6 +28,9 @@
 		    formData.append("tipo_identificador", "E");
 		    formData.append("titulo", assunto);
 		    formData.append("mensagem", mensagem);
+		    //formData.append("campos[02410d3c95152f4e3010a4e011586eda]", "Azul");
+		    formData.append("campos[84428fe9aa2a5338f6fd9c8b01bf9f1f]", "Broker");
+		    
 
 			var end_point="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/";
 			const Url = end_point.concat(email);
