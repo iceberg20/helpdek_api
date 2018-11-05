@@ -6,11 +6,88 @@
 <%= render "home/meus-chamados" %>
 
 	<script type="text/javascript">
+
 		function meus_chamado(){
-			alert("Listar");
+			var end_point="https://api.tomticket.com/chamados/be2df88e637ceb5991f400ae9aebc1a9/1?idcliente=cliente1@email.com&tipo_identificacao=E";
+			//const Url = end_point.concat(email);
+		
+					$.ajax({
+						type: "GET",
+						enctype: 'multipart/form-data',
+						url: end_point,
+						cache: false,
+	                    contentType: false,
+	                    processData: false
+					}).done(function(data){
+						listar(data);
+
+						console.log(data);      
+                }).always(function(jqXHR, textStatus){
+
+                }).fail(function(data){
+                	$("#modal-fail-alert").show();
+                     console.log(data);  
+                });
 
 		}
 
+		function listar(chamados){
+			//Criar Elementos
+			var bodyLista = document.getElementById("chamado");
+			var linha = document.createElement("rt");
+			var campo_assunto = document.createElement("td");
+			var campo_status = document.createElement("td");
+			var campo_data = document.createElement("td");
+			var corpo_tabela = document.getElementById("lista-table");
+			console.log(corpo_tabela);
+			// Criar Nós
+			var texto_assunto = document.createTextNode("Deu erro"); 
+			var texto_status  = document.createTextNode("Resolvido"); 
+			var texto_data =  = document.createTextNode("08/10/2018"); 
+			// Vinvular os nós aos elementos
+			campo_assunto.appendChild(texto_assunto);
+			campo_status.appendChild(texto_status);
+			campo_data.appendChild(texto_data);
+			//vincular elemenros ao documentos
+			
+
+
+		}
+
+    function montar_tabela(chamados) {
+        // get the reference for the body
+        var body = document.getElementsByTagName("body")[0];
+
+        // creates a <table> element and a <tbody> element
+        var tbl     = document.createElement("table");
+        var tblBody = document.createElement("tbody");
+
+        // creating all cells
+        for (var j = 0; j < 2; j++) {
+            // creates a table row
+            var row = document.createElement("tr");
+
+            for (var i = 0; i < 2; i++) {
+                // Create a <td> element and a text node, make the text
+                // node the contents of the <td>, and put the <td> at
+                // the end of the table row
+                var cell = document.createElement("td");
+                var cellText = document.createTextNode("cell is row "+j+", column "+i);
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            }
+
+            // add the row to the end of the table body
+            tblBody.appendChild(row);
+        }
+
+        // put the <tbody> in the <table>
+        tbl.appendChild(tblBody);
+        // appends <table> into <body>
+        body.appendChild(tbl);
+        // sets the border attribute of tbl to 2;
+        tbl.setAttribute("border", "2");
+    }
 		function criar_chamado(){
 		    var email = document.getElementsByName("femail")[0].value;
 			var assunto = document.getElementsByName("fassunto")[0].value;
