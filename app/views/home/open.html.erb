@@ -9,31 +9,69 @@
 
 		function meus_chamado(){
 			var end_point="https://api.tomticket.com/chamados/be2df88e637ceb5991f400ae9aebc1a9/1?idcliente=cliente1@email.com&tipo_identificacao=E";
-			//const Url = end_point.concat(email);
-		var data = "oi";
-		listar(data);
-		/*
+
 					$.ajax({
 						type: "GET",
 						enctype: 'multipart/form-data',
 						url: end_point,
 						cache: false,
-	                    contentType: false,
-	                    processData: false
+            contentType: false,
+            processData: false
 					}).done(function(data){
-						listar(data);
-
+						listar(filtrar_campos(data));
 						console.log(data);      
                 }).always(function(jqXHR, textStatus){
 
                 }).fail(function(data){
                 	$("#modal-fail-alert").show();
                      console.log(data);  
-                }); */
+                }); 
+		}		
 
+		function filtrar_campos(data){
+			var titulos = [];
+			var status = [];
+			var data_criacao = [];
+			var qtd = 0;
+
+      for (var key in data) {
+          // skip loop if the property is from prototype
+          if (!data.hasOwnProperty(key)) continue;
+
+          var obj = data[key];
+          for (var prop in obj) {
+              // skip loop if the property is from prototype
+              if(!obj.hasOwnProperty(prop)) continue;
+
+              qtd++;
+              titulos.push(obj[prop].titulo);
+              status.push(obj[prop].status);
+              data_criacao.push(obj[prop].data_criacao);
+              console.log("titulo" + " = " + obj[prop].titulo)  
+              console.log("status" + " = " + obj[prop].status)            
+              console.log("data_criacao" + " = " + obj[prop].data_criacao);
+          }
+      }
+
+      var filtered_fields = { 
+      				qtd: qtd, 
+      		    titulos: titulos,
+      		    status: status,
+      		    datas_criacao: data_criacao
+      				}
+
+
+      console.log(">>>>>>>>>>>>><<<<<<<<<<");
+      console.log(titulos);
+      console.log(status);
+      console.log(data_criacao);
+
+      console.log(filtered_fields);
+
+      return filtered_fields;
 		}
 
-		function listar(chamados){
+		function adicionar_linha(assunto, status, data){
 			//Criar Elementos
 			var bodyLista = document.getElementById("chamado");
 			var linha = document.createElement("tr");
@@ -45,9 +83,9 @@
 			console.log(corpo_tabela);
 			// Criar Nós
 			var texto_indice = document.createTextNode(" ");
-			var texto_assunto = document.createTextNode("Deu erro"); 
-			var texto_status  = document.createTextNode("Resolvido"); 
-			var texto_data = document.createTextNode("08/10/2018"); 
+			var texto_assunto = document.createTextNode(assunto); 
+			var texto_status  = document.createTextNode(status); 
+			var texto_data = document.createTextNode(data); 
 			// Vinvular os nós aos elementos
 			campo_indice.appendChild(texto_indice);
 			campo_assunto.appendChild(texto_assunto);
@@ -58,54 +96,26 @@
 			linha.appendChild(campo_status);
 			linha.appendChild(campo_data);
 			//vincular elemenros ao documentos
-			corpo_tabela.appendChild(linha);
+				corpo_tabela.appendChild(linha);
+		}
+
+		function listar(fields){
+			for (var i = 0; i < fields.qtd; i++) {
+				adicionar_linha(fields.titulos[i],fields.status[i], fields.datas_criacao[i]);
+			}
 
 		}
 
-    function montar_tabela(chamados) {
-        // get the reference for the body
-        var body = document.getElementsByTagName("body")[0];
-
-        // creates a <table> element and a <tbody> element
-        var tbl     = document.createElement("table");
-        var tblBody = document.createElement("tbody");
-
-        // creating all cells
-        for (var j = 0; j < 2; j++) {
-            // creates a table row
-            var row = document.createElement("tr");
-
-            for (var i = 0; i < 2; i++) {
-                // Create a <td> element and a text node, make the text
-                // node the contents of the <td>, and put the <td> at
-                // the end of the table row
-                var cell = document.createElement("td");
-                var cellText = document.createTextNode("cell is row "+j+", column "+i);
-                cell.appendChild(cellText);
-                row.appendChild(cell);
-            }
-
-            // add the row to the end of the table body
-            tblBody.appendChild(row);
-        }
-
-        // put the <tbody> in the <table>
-        tbl.appendChild(tblBody);
-        // appends <table> into <body>
-        body.appendChild(tbl);
-        // sets the border attribute of tbl to 2;
-        tbl.setAttribute("border", "2");
-    }
 		function criar_chamado(){
-		    var email = document.getElementsByName("femail")[0].value;
+		  var email = document.getElementsByName("femail")[0].value;
 			var assunto = document.getElementsByName("fassunto")[0].value;
 			var mensagem = document.getElementsByName("fmensagem")[0].value;
 
-		    let formData = new FormData;
-		    let image = $("#anexo");
+	    let formData = new FormData;
+	    let image = $("#anexo");
 
-		    console.log(image[0].files);
-		    let qtd_imagem = image[0].files.length;
+	    console.log(image[0].files);
+	    let qtd_imagem = image[0].files.length;
 
 			var i;
 			for (i = 0; i < qtd_imagem; i++) {
@@ -118,11 +128,9 @@
 		    formData.append("tipo_identificador", "E");
 		    formData.append("titulo", assunto);
 		    formData.append("mensagem", mensagem);
-		    //formData.append("campos[02410d3c95152f4e3010a4e011586eda]", "Azul");
-		    formData.append("campos[84428fe9aa2a5338f6fd9c8b01bf9f1f]", "Broker");
-		    
+		    formData.append("campos[84428fe9aa2a5338f6fd9c8b01bf9f1f]", "Broker");		    
 
-			var end_point="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/";
+				var end_point="https://api.tomticket.com/criar_chamado/be2df88e637ceb5991f400ae9aebc1a9/";
 			const Url = end_point.concat(email);
 		
 					$.ajax({
