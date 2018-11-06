@@ -10,7 +10,9 @@
 		function meus_chamado(){
 			var end_point="https://api.tomticket.com/chamados/be2df88e637ceb5991f400ae9aebc1a9/1?idcliente=cliente1@email.com&tipo_identificacao=E";
 			//const Url = end_point.concat(email);
-		
+		var data = "oi";
+		listar(data);
+		/*
 					$.ajax({
 						type: "GET",
 						enctype: 'multipart/form-data',
@@ -27,30 +29,36 @@
                 }).fail(function(data){
                 	$("#modal-fail-alert").show();
                      console.log(data);  
-                });
+                }); */
 
 		}
 
 		function listar(chamados){
 			//Criar Elementos
 			var bodyLista = document.getElementById("chamado");
-			var linha = document.createElement("rt");
+			var linha = document.createElement("tr");
+			var campo_indice = document.createElement("td");
 			var campo_assunto = document.createElement("td");
 			var campo_status = document.createElement("td");
 			var campo_data = document.createElement("td");
-			var corpo_tabela = document.getElementById("lista-table");
+			var corpo_tabela = document.querySelector("tbody");
 			console.log(corpo_tabela);
 			// Criar Nós
+			var texto_indice = document.createTextNode(" ");
 			var texto_assunto = document.createTextNode("Deu erro"); 
 			var texto_status  = document.createTextNode("Resolvido"); 
-			var texto_data =  = document.createTextNode("08/10/2018"); 
+			var texto_data = document.createTextNode("08/10/2018"); 
 			// Vinvular os nós aos elementos
+			campo_indice.appendChild(texto_indice);
 			campo_assunto.appendChild(texto_assunto);
 			campo_status.appendChild(texto_status);
 			campo_data.appendChild(texto_data);
+			linha.appendChild(campo_indice);
+			linha.appendChild(campo_assunto);
+			linha.appendChild(campo_status);
+			linha.appendChild(campo_data);
 			//vincular elemenros ao documentos
-			
-
+			corpo_tabela.appendChild(linha);
 
 		}
 
